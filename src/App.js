@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   getGenreSeeds = () => {
-
+    window.location='http://localhost:3000/api/v1/load-genre-seeds';
     this.loadGenres()
   }
 

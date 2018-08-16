@@ -4,9 +4,33 @@ import './App.css';
 
 class App extends Component {
 
+  state = {
+    genres: []
+  }
+
+  loadGenres = () => {
+    fetch('http://localhost:3000/api/v1/genres')
+    .then(resp => resp.json())
+    .then(resp => this.setState({
+      genres: resp
+    }))
+    .then(resp => console.log(this.state.genres))
+
+  }
+
   visitSpotifyLogin = () => {
     window.location='http://localhost:3000/api/v1/login';
   }
+
+  getGenreSeeds = () => {
+
+    this.loadGenres()
+  }
+
+  showGenres = () => {
+    this.state.genres.map(genre => <p>genre.name</p>)
+  }
+
   render() {
     return (
       <div className="App">
@@ -17,6 +41,8 @@ class App extends Component {
         <p className="App-intro">
           <button onClick={this.visitSpotifyLogin}>Login to Spotify</button>
 
+        <button onClick={this.getGenreSeeds}>get genre seeds</button>
+        {this.showGenres()}
         </p>
       </div>
 

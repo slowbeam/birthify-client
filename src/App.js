@@ -3,6 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  visitSpotifyLogin = () => {
+    window.location='http://localhost:3000/api/v1/login';
+  }
   render() {
     return (
       <div className="App">
@@ -11,9 +15,11 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          <button onClick={this.visitSpotifyLogin}>Login to Spotify</button>
+
         </p>
       </div>
+
     );
   }
 }

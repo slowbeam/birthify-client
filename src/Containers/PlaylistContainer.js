@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import songs from '../Components/songs';
 import Playlist from '../Components/Playlist';
 
 class PlaylistContainer extends Component {
 
-    state = {
-        songs: songs
-    }
-
     render() {
         return (
-            <div>
-                <Playlist songs={this.state.songs}/>
+            <div className="song-container">
+                <Playlist songs={this.props.songs}/>
             </div>
         );
     }

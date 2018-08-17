@@ -7,7 +7,7 @@ const SongCard = (props) => {
                 <h3>{props.song.title}</h3>
                 <h4>{props.song.artist}</h4>
                 <p>{props.song.release_date}</p>
-                <img className='album-cover' src={props.song.album_cover} alt=''/>
+                <img className='album-cover' src={props.song.cover} alt=''/>
             </div>
             <br />
         </React.Fragment>

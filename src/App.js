@@ -62,8 +62,8 @@ class App extends Component {
         <br />
         <NavBar />
         <br />
-        <PlaylistContainer />
-        {console.log(this.state.birthSongs)}
+        <PlaylistContainer songs={this.state.songs} />
+
       </div>
 
     );

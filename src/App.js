@@ -8,7 +8,8 @@ class App extends Component {
   state = {
     songUsers: [],
     songs: [],
-    searchTerm: ''
+    searchTerm: '',
+    birthYear: ''
   }
 
 
@@ -40,16 +41,30 @@ class App extends Component {
     return matchingArray
   }
 
+
+  ComponentDidMount(){
+    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => console.log(resp))
+  }
+
   loadSongUsers = (userId) => {
     fetch('http://localhost:3000/api/v1/song_users').then(resp => resp.json()).then(resp => this.setState({songUsers: resp}))
   }
 
-  loadSongs = () => {
-    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => this.setState({songs: resp}))
+  renderAllSongs = () => {
+    return this.state.songs.map(songObj =>
+      <div key={songObj.id} className="song-card">
+      <p>{songObj.title}</p>
+      <p>{songObj.artist}</p>
+      <p>{songObj.release_date}</p>
+      </div>
+    )
   }
 
-  renderSongs = () => {
-    return this.state.songs.map(songObj =>
+  renderBirthYearSongs = () => {
+    const songsDup = [...this.state.songs]
+    const birthYearSongs = songsDup.filter(songObj => songObj.release_date.includes(this.state.birthYear))
+
+    return birthYearSongs.map(songObj =>
       <div key={songObj.id} className="song-card">
       <p>{songObj.title}</p>
       <p>{songObj.artist}</p>
@@ -60,6 +75,7 @@ class App extends Component {
 
 
   searchForYear = (year) => {
+    this.setState({birthYear: year});
     window.location='http://localhost:3000/api/v1/search/?year=' + year;
   }
 
@@ -74,6 +90,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Birthify</h1>
         </header>
+
         <div className="home-container">
         <button className="spotify-login-button" onClick={this.visitSpotifyLogin}>Login to Spotify</button>
         <p>please enter your birth year:</p>
@@ -81,11 +98,10 @@ class App extends Component {
         <button className="submit-year-button" onClick={() => this.searchForYear(this.state.searchTerm)}>submit</button>
         </div>
 
-        {/*{this.loadSongUsers(1)}
-        {this.loadSongs()}*/}
-        
+
+
         <div className="song-container">
-        {this.renderSongs()}
+        {this.renderAllSongs()}
         </div>
 
       </div>

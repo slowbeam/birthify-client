@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import NavBar from './Components/NavBar';
 import PlaylistContainer from './Containers/PlaylistContainer';
@@ -52,8 +51,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Birthify</h1>
+          <img className="App-logo" src='/birthify_logo_large.png' alt="" />
         </header>
         <br />
         <Login />

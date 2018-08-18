@@ -1,0 +1,108 @@
+<svg id="tongue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffdede;
+        stroke: #846f61;
+        stroke-width: 12px;
+      }
+
+      .cls-1, .cls-8, .cls-9 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2, .cls-5 {
+        fill: #aea0ea;
+        stroke: #5c5c8e;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8 {
+        stroke-linecap: round;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        stroke-width: 8px;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #cbf7f7;
+        stroke: #7da4a8;
+      }
+
+      .cls-3, .cls-6 {
+        stroke-width: 7px;
+      }
+
+      .cls-4 {
+        stroke-width: 9px;
+      }
+
+      .cls-5, .cls-7 {
+        stroke-width: 6px;
+      }
+
+      .cls-6, .cls-7 {
+        fill: #cafccf;
+        stroke: #a7d8b9;
+      }
+
+      .cls-8 {
+        fill: none;
+        stroke: #5e4c3f;
+        stroke-width: 14px;
+      }
+
+      .cls-9 {
+        fill: #512a43;
+        stroke: #683e3e;
+        stroke-width: 3px;
+      }
+
+      .cls-10 {
+        fill: #293059;
+      }
+
+      .cls-11 {
+        fill: #e0eefc;
+      }
+
+      .cls-12 {
+        fill: #b8ffe7;
+      }
+
+      .cls-13 {
+        fill: #af488f;
+      }
+    </style>
+  </defs>
+  <title>birthifylogo</title>
+  <path class="cls-1" d="M0,0Z"/>
+  <path class="cls-2" d="M0,0Z"/>
+  <path class="cls-3" d="M0,0Z"/>
+  <path class="cls-4" d="M0,0Z"/>
+  <path class="cls-5" d="M0,0Z"/>
+  <path class="cls-6" d="M0,0Z"/>
+  <path class="cls-7" d="M0,0Z"/>
+  <path class="cls-8" d="M0,0H0"/>
+  <path class="cls-9" d="M0,0Z"/>
+  <path class="cls-10" d="M0,0Z"/>
+  <path class="cls-11" d="M0,0Z"/>
+  <path class="cls-11" d="M0,0Z"/>
+  <path class="cls-11" d="M0,0Z"/>
+  <path class="cls-11" d="M0,0Z"/>
+  <g>
+    <path class="cls-12" d="M0,0ZM0,0ZM0,0Z"/>
+    <path class="cls-12" d="M0,0ZM0,0Z"/>
+    <path class="cls-12" d="M0,0Z"/>
+    <path class="cls-12" d="M0,0Z"/>
+    <path class="cls-12" d="M0,0Z"/>
+    <path class="cls-12" d="M0,0ZM0,0Z"/>
+    <path class="cls-12" d="M0,0Z"/>
+    <path class="cls-12" d="M0,0Z"/>
+  </g>
+  <path class="cls-13" d="M0,0Z"/>
+</svg>

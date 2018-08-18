@@ -51,12 +51,10 @@ class App extends Component {
     if (this.state.loggedInUser){
 
       const dupArray = [...this.state.songUsers]
-      console.log(dupArray)
 
       const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.state.loggedInUser.id)
 
       const songIdArray = filteredSongUserArray.map(songUserObj => songUserObj["song_id"]);
-
 
       const songsDup = [...this.state.songs];
 

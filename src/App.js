@@ -9,10 +9,12 @@ import BirthYearForm from './Components/BirthYearForm'
 class App extends Component {
 
   state = {
-    songUsers: [],
+    users: [],
     songs: [],
+    songUsers: [],
     birthYear: '',
-    birthSongs: []
+    birthSongs: [],
+    loggedInUserId: null
   }
 
   setBirthYear = (year) => {
@@ -22,29 +24,65 @@ class App extends Component {
   }
 
   filterMatchingUser = (songUserArray, userId) => {
-    const matchingArray = songUserArray.filter(Obj => Obj["user_id"] === userId)
-    return matchingArray
+    const dupArray = [...songUserArray]
+    return dupArray.filter(obj => obj["user_id"] === userId)
+
+  }
+
+  setLoggedInUser = (usersArray) => {
+
+  }
+
+  SetUsers = (usersArray) => {
+      const foundUser = usersArray.find(userObj => userObj["logged_in"] === true);
+      this.setState({
+        users: usersArray,
+        loggedInUserId: foundUser["id"]
+      })
+
+
+  }
+
+  loadLoggedInUsersSongs = () => {
+
+    const dupArray = [...this.state.songUsers]
+
+    const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.state.loggedInUserId)
+
+    console.log(filteredSongUserArray)
+
+    const songIdArray = filteredSongUserArray.map(songUserObj => songUserObj["song_id"]);
+
+
+    const songsDup = [...this.state.songs];
+
+    const filteredSongs = songsDup.filter(songObj => songIdArray.includes(songObj["id"]));
+
+    this.setState({
+      birthSongs: filteredSongs
+    })
+  }
+
+  loadAllData = () => {
+    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => {this.setState({songs: resp}); return fetch('http://localhost:3000/api/v1/song_users')}).then(resp => resp.json()).then(resp => {this.setState({songUsers: resp}); return fetch('http://localhost:3000/api/v1/users')}).then(resp => resp.json()).then(resp => {this.SetUsers(resp)}).then(this.loadLoggedInUsersSongs)
+  }
+
+  loadUsers = () => {
+    fetch('http://localhost:3000/api/v1/users').then(resp => resp.json()).then(resp => {this.findAndSetUsers(resp)})
   }
 
 
   loadSongs = () => {
-    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => this.setState({songs: resp, birthSongs: resp}))
+    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => this.setState({songs: resp}))
   }
 
-  loadSongUsers = (userId) => {
+  loadSongUsers = () => {
     fetch('http://localhost:3000/api/v1/song_users').then(resp => resp.json()).then(resp => this.setState({songUsers: resp}))
   }
 
-  saveBirthYearSongs = () => {
-    const songsDup = [...this.state.birthSongs]
+  componentDidMount() {
+    this.loadAllData()
 
-    const birthYearSongs = songsDup.filter(songObj => songObj.release_date.includes(this.state.birthYear))
-
-    this.setState({birthSongs: birthYearSongs})
-  }
-
-  componentDidMount(){
-    this.loadSongs()
   }
 
   render() {
@@ -52,6 +90,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
+
         </header>
         <br />
         <Login />
@@ -60,7 +99,7 @@ class App extends Component {
         <br />
         <NavBar />
         <br />
-        <PlaylistContainer songs={this.state.songs} />
+        <PlaylistContainer songs={this.state.birthSongs} />
 
       </div>
 

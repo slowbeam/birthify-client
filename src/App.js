@@ -14,7 +14,7 @@ class App extends Component {
     songUsers: [],
     birthYear: '',
     birthSongs: [],
-    loggedInUserId: null
+    loggedInUser: null
   }
 
   setBirthYear = (year) => {
@@ -29,55 +29,58 @@ class App extends Component {
 
   }
 
-  setLoggedInUser = (usersArray) => {
+  setLoggedInUser = () => {
+    const foundUser = this.state.users.find(userObj => userObj["logged_in"] === true);
+
+    if (foundUser){
+      this.setState({
+      loggedInUser: foundUser
+      })
+    }
 
   }
 
   SetUsers = (usersArray) => {
-      const foundUser = usersArray.find(userObj => userObj["logged_in"] === true);
-      this.setState({
-        users: usersArray,
-        loggedInUserId: foundUser["id"]
-      })
-
-
+    this.setState({
+      users: usersArray
+    })
   }
 
   loadLoggedInUsersSongs = () => {
 
-    const dupArray = [...this.state.songUsers]
+    if (this.state.loggedInUser){
 
-    const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.state.loggedInUserId)
+      const dupArray = [...this.state.songUsers]
+      console.log(dupArray)
 
-    console.log(filteredSongUserArray)
+      const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.state.loggedInUser.id)
 
-    const songIdArray = filteredSongUserArray.map(songUserObj => songUserObj["song_id"]);
+      const songIdArray = filteredSongUserArray.map(songUserObj => songUserObj["song_id"]);
 
 
-    const songsDup = [...this.state.songs];
+      const songsDup = [...this.state.songs];
 
-    const filteredSongs = songsDup.filter(songObj => songIdArray.includes(songObj["id"]));
+      const filteredSongs = songsDup.filter(songObj => songIdArray.includes(songObj["id"]));
 
-    this.setState({
-      birthSongs: filteredSongs
-    })
+      this.setState({
+        birthSongs: filteredSongs
+      })
+    }
+
+
   }
 
   loadAllData = () => {
-    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => {this.setState({songs: resp}); return fetch('http://localhost:3000/api/v1/song_users')}).then(resp => resp.json()).then(resp => {this.setState({songUsers: resp}); return fetch('http://localhost:3000/api/v1/users')}).then(resp => resp.json()).then(resp => {this.SetUsers(resp)}).then(this.loadLoggedInUsersSongs)
+    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => {this.setState({songs: resp}); return fetch('http://localhost:3000/api/v1/song_users')}).then(resp => resp.json()).then(resp => {this.setState({songUsers: resp}); return fetch('http://localhost:3000/api/v1/users')}).then(resp => resp.json()).then(resp => {this.SetUsers(resp)}).then(this.setLoggedInUser).then(this.loadLoggedInUsersSongs)
   }
 
-  loadUsers = () => {
-    fetch('http://localhost:3000/api/v1/users').then(resp => resp.json()).then(resp => {this.findAndSetUsers(resp)})
-  }
-
-
-  loadSongs = () => {
-    fetch('http://localhost:3000/api/v1/songs').then(resp => resp.json()).then(resp => this.setState({songs: resp}))
-  }
-
-  loadSongUsers = () => {
-    fetch('http://localhost:3000/api/v1/song_users').then(resp => resp.json()).then(resp => this.setState({songUsers: resp}))
+  renderLoginText = () => {
+    if (this.state.loggedInUser){
+      return <h3>Logged in as: {this.state.loggedInUser.username} </h3>
+    }
+    else {
+      return <h3>Please Login</h3>
+    }
   }
 
   componentDidMount() {
@@ -92,6 +95,7 @@ class App extends Component {
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
 
         </header>
+        {this.renderLoginText()}
         <br />
         <Login />
         <br />

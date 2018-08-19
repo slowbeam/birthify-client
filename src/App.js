@@ -129,10 +129,11 @@ class App extends Component {
     this.player.on('account_error', e => {console.error(e); });
     this.player.on('playback_error', e => {console.error(e); });
     this.player.on('player_state_changed', state => this.onStateChanged(state));
-    this.player.on('ready', data => {
+    this.player.on('ready', async data => {
       let { device_id } = data;
-      console.log("let the music playyyy");
-      this.setState({ deviceId: device_id})
+      console.log("let the music play on!")
+      await this.setState({ deviceId: device_id});
+      this.transferPlaybackHere();
     });
   }
 
@@ -161,6 +162,32 @@ class App extends Component {
 
   }
 
+  onPrevClick = () => {
+    this.player.previousTrack();
+  }
+
+  onPlayClick = () => {
+    this.player.togglePlay();
+  }
+
+  onNextClick = () => {
+    this.player.nextTrack();
+  }
+
+  transferPlaybackHere() {
+    const { deviceId, loggedInUser } = this.state;
+    fetch("https://api.spotify.com/v1/me/player", {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${loggedInUser.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "device_ids": [ deviceId ],
+        "play": false,
+      }),
+    });
+  }
 
   componentDidMount() {
     this.loadAllData()
@@ -182,6 +209,11 @@ class App extends Component {
         <p>Artist: {this.state.artistName}</p>
         <p>Track: {this.state.trackName}</p>
         <p>Album: {this.state.albumName}</p>
+        <p>
+          <button onClick={() => this.onPrevClick()}>Previous</button>
+          <button onClick={() => this.onPlayClick()}>{this.state.playing ? "Pause" : "Play"}</button>
+          <button onClick={() => this.onNextClick()}>Next</button>
+        </p>
         </div>
 
         {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }

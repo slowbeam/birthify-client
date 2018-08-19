@@ -128,12 +128,37 @@ class App extends Component {
     });
     this.player.on('account_error', e => {console.error(e); });
     this.player.on('playback_error', e => {console.error(e); });
-    this.player.on('player_state_changed', state => {console.log(state); });
+    this.player.on('player_state_changed', state => this.onStateChanged(state));
     this.player.on('ready', data => {
       let { device_id } = data;
       console.log("let the music playyyy");
       this.setState({ deviceId: device_id})
     });
+  }
+
+  onStateChanged(state) {
+    if (state !== null) {
+      const {
+        current_track: currentTrack,
+        position,
+        duration,
+      } = state.track_window;
+      const trackName = currentTrack.name;
+      const albumName = currentTrack.album.name;
+      const artistName = currentTrack.artists
+        .map(artist => artist.name)
+        .join(", ");
+      const playing = !state.paused;
+      this.setState({
+        position,
+        duration,
+        trackName,
+        albumName,
+        artistName,
+        playing
+      });
+    }
+
   }
 
 
@@ -151,6 +176,14 @@ class App extends Component {
 
         </header>
         <br />
+
+        <div>
+        <h3>Now Playing:</h3>
+        <p>Artist: {this.state.artistName}</p>
+        <p>Track: {this.state.trackName}</p>
+        <p>Album: {this.state.albumName}</p>
+        </div>
+
         {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
         <br />
         <BirthYearForm setBirthYear={this.setBirthYear}/>

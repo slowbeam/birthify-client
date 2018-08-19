@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Login = () => {
+const Login = (props) => {
 
   const visitSpotifyLogin = () => {
     window.location='http://localhost:3000/api/v1/login';
@@ -8,7 +8,7 @@ const Login = () => {
 
 
     return(
-      <button className="spotify-login-button" onClick={visitSpotifyLogin}>Login to Spotify</button>
+      <button className="spotify-login-button" onClick={visitSpotifyLogin}>{props.text}</button>
     )
 }
 

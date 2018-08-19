@@ -8,6 +8,27 @@ import BirthYearForm from './Components/BirthYearForm'
 
 class App extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      users: [],
+      songs: [],
+      songUsers: [],
+      birthYear: '',
+      birthSongs: [],
+      loggedInUser: null,
+      deviceId: "",
+      trackName: "Track Name",
+      artistName: "Artist Name",
+      albumName: "Album Name",
+      playing: false,
+      position: 0,
+      duration: 0
+    };
+
+    this.playerCheckInterval = null;
+  }
+
   state = {
     users: [],
     songs: [],
@@ -81,8 +102,44 @@ class App extends Component {
     }
   }
 
+  checkForPlayer(){
+    if (this.state.loggedInUser){
+      const token = this.state.loggedInUser["access_token"];
+
+      console.log(window.Spotify)
+
+      if (window.Spotify !== null){
+        clearInterval(this.playerCheckInterval);
+        this.player = new window.Spotify.Player({
+          name: "Birthify Spotify Player",
+          getOAuthToken: cb => { cb(token); }
+        })
+        this.createEventHandlers()
+        this.player.connect();
+      }
+    }
+
+  }
+
+  createEventHandlers(){
+    this.player.on('initialization_error', e => { console.error(e); });
+    this.player.on('authentication_error', e => {
+      console.error(e)
+    });
+    this.player.on('account_error', e => {console.error(e); });
+    this.player.on('playback_error', e => {console.error(e); });
+    this.player.on('player_state_changed', state => {console.log(state); });
+    this.player.on('ready', data => {
+      let { device_id } = data;
+      console.log("let the music playyyy");
+      this.setState({ deviceId: device_id})
+    });
+  }
+
+
   componentDidMount() {
     this.loadAllData()
+    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000)
 
   }
 
@@ -93,12 +150,12 @@ class App extends Component {
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
 
         </header>
-        {this.renderLoginText()}
         <br />
-        <Login />
+        {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
         <br />
         <BirthYearForm setBirthYear={this.setBirthYear}/>
         <br />
+
         <NavBar />
         <br />
         <PlaylistContainer songs={this.state.birthSongs} />

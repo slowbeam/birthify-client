@@ -4,6 +4,7 @@ import NavBar from './Components/NavBar';
 import PlaylistContainer from './Containers/PlaylistContainer';
 import Login from './Components/Login'
 import BirthYearForm from './Components/BirthYearForm'
+import CreatePlaylist from './Components/CreatePlaylist'
 
 
 class App extends Component {
@@ -204,6 +205,12 @@ class App extends Component {
         </header>
         <br />
 
+
+
+        {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
+        <br />
+        <BirthYearForm setBirthYear={this.setBirthYear}/>
+        <br />
         <div>
         <h3>Now Playing:</h3>
         <p>Artist: {this.state.artistName}</p>
@@ -215,13 +222,10 @@ class App extends Component {
           <button onClick={() => this.onNextClick()}>Next</button>
         </p>
         </div>
-
-        {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
         <br />
-        <BirthYearForm setBirthYear={this.setBirthYear}/>
-        <br />
-
         <NavBar />
+        <br />
+        <CreatePlaylist />
         <br />
         <PlaylistContainer songs={this.state.birthSongs} />
 

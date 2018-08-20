@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e60073;
+  background-image: linear-gradient(-45deg, #ff0066, #ffff99);
   height: 180px;
   padding: 20px;
   color: white;
@@ -71,4 +71,15 @@
 
 .create-new-playlist-button {
   margin: 10px;
+}
+
+.music-player {
+  background-color: #ffcccc;
+  width: 300px;
+  border-radius: 5px;
+}
+
+.player-container {
+  display: flex;
+  justify-content: center;
 }

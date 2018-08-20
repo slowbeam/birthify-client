@@ -5,6 +5,7 @@ import PlaylistContainer from './Containers/PlaylistContainer';
 import Login from './Components/Login'
 import BirthYearForm from './Components/BirthYearForm'
 import CreatePlaylist from './Components/CreatePlaylist'
+import MusicPlayer from './Components/MusicPlayer'
 
 
 class App extends Component {
@@ -212,27 +213,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
-
         </header>
         <br />
-
         {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
         <br />
         <BirthYearForm setBirthYear={this.setBirthYear}/>
         <br />
-        <div>
-        <h3>Now Playing:</h3>
-        <p>Artist: {this.state.artistName}</p>
-        <p>Track: {this.state.trackName}</p>
-        <p>Album: {this.state.albumName}</p>
-        <p>
-          <button onClick={() => this.onPrevClick()}>Previous</button>
-          <button onClick={() => this.onPlayClick()}>{this.state.playing ? "Pause" : "Play"}</button>
-          <button onClick={() => this.onNextClick()}>Next</button>
-        </p>
-        </div>
-        <br />
-        <NavBar />
+        <MusicPlayer artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}  />
         <br />
         <CreatePlaylist load={this.loadCurrentPlaylist} deviceId={this.state.deviceId}/>
         <br />

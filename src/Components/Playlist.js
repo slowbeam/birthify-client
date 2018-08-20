@@ -8,9 +8,9 @@ const Playlist = ({ songs }) => {
     }
 
     return (
-        <div>
+        <React.Fragment>
             {renderSongs()}
-        </div>
+        </React.Fragment>
     );
 }
 

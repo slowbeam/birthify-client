@@ -4,7 +4,7 @@ const MusicPlayer = (props) => {
 
 
     return(
-      <div className="player-container">
+
         <div className="music-player">
         <h3>Now Playing:</h3>
         <p>Artist: {props.artistName}</p>
@@ -16,7 +16,6 @@ const MusicPlayer = (props) => {
           <button onClick={() => props.onNextClick()}>Next</button>
         </p>
         </div>
-      </div>
 
     )
 }

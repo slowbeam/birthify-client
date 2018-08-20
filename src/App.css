@@ -41,16 +41,21 @@
 }
 .song-card {
   background-color: #ffcc99;
-  width: 400px;
+  width: 200px;
   border-radius: 5px;
   margin: 5px;
 }
 
 .song-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.sidebar {
+  display: flex;
+  justify-content: left;
+  width: 30%;
 }
 
 .home-container {
@@ -79,7 +84,11 @@
   border-radius: 5px;
 }
 
-.player-container {
+.playlist-page-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.playlist-container {
+  width: 70%;
 }

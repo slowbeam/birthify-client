@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBar from './Components/NavBar';
 import PlaylistContainer from './Containers/PlaylistContainer';
+import SideBar from './Containers/SideBar'
 import Login from './Components/Login'
 import BirthYearForm from './Components/BirthYearForm'
-import CreatePlaylist from './Components/CreatePlaylist'
-import MusicPlayer from './Components/MusicPlayer'
+import LogOutButton from './Components/LogOutButton'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 
 class App extends Component {
@@ -123,7 +123,6 @@ class App extends Component {
     this.player.on('player_state_changed', state => this.onStateChanged(state));
     this.player.on('ready', async data => {
       let { device_id } = data;
-      console.log(device_id);
       await this.setState({ deviceId: device_id});
       this.transferPlaybackHere();
 
@@ -208,22 +207,53 @@ class App extends Component {
 
   }
 
+  Login = () => {
+    return (
+      <Login text="Login to Spotify" />
+    )
+  }
+
+  Welcome = () => {
+    return (
+      <BirthYearForm setBirthYear={this.setBirthYear}/>
+    )
+  }
+
+  Playlist = () => {
+    return (
+      <div className="playlist-page-container">
+        <SideBar artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}/>
+        <PlaylistContainer songs={this.state.birthSongs} />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
+          {this.state.loggedInUser ? <LogOutButton /> : ''}
         </header>
-        <br />
+        {/*<br />
         {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
-        <br />
-        <BirthYearForm setBirthYear={this.setBirthYear}/>
+        <br />*/}
+        <Router>
+          <React.Fragment>
+            <Route exact path="/login" render={this.Login} />
+            <Route exact path="/welcome" render={this.Welcome} />
+            <Route exact path="/playlist" render={this.Playlist} />
+          </React.Fragment>
+
+        </Router>
+
+        {/*<BirthYearForm setBirthYear={this.setBirthYear}/>
         <br />
         <MusicPlayer artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}  />
         <br />
         <CreatePlaylist load={this.loadCurrentPlaylist} deviceId={this.state.deviceId}/>
         <br />
-        <PlaylistContainer songs={this.state.birthSongs} />
+        <PlaylistContainer songs={this.state.birthSongs} />*/}
 
 
       </div>

@@ -6,9 +6,11 @@ const Login = (props) => {
     window.location='http://localhost:3000/api/v1/login';
   }
 
-
     return(
-      <button className="spotify-login-button" onClick={visitSpotifyLogin}>{props.text}</button>
+      <div>
+        <button className="spotify-login-button" onClick={visitSpotifyLogin}>{props.text}</button>
+      </div>
+
     )
 }
 

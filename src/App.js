@@ -30,15 +30,6 @@ class App extends Component {
     this.playerCheckInterval = null;
   }
 
-  state = {
-    users: [],
-    songs: [],
-    songUsers: [],
-    birthYear: '',
-    birthSongs: [],
-    loggedInUser: null
-  }
-
   setBirthYear = (year) => {
     this.setState({
       birthYear: year
@@ -107,7 +98,6 @@ class App extends Component {
     if (this.state.loggedInUser){
       const token = this.state.loggedInUser["access_token"];
 
-      console.log(window.Spotify)
 
       if (window.Spotify !== null){
         clearInterval(this.playerCheckInterval);
@@ -132,9 +122,10 @@ class App extends Component {
     this.player.on('player_state_changed', state => this.onStateChanged(state));
     this.player.on('ready', async data => {
       let { device_id } = data;
-      console.log("let the music play on!")
+      console.log(device_id);
       await this.setState({ deviceId: device_id});
       this.transferPlaybackHere();
+
     });
   }
 
@@ -175,7 +166,9 @@ class App extends Component {
     this.player.nextTrack();
   }
 
-  transferPlaybackHere() {
+  transferPlaybackHere = () => {
+
+
     const { deviceId, loggedInUser } = this.state;
     fetch("https://api.spotify.com/v1/me/player", {
       method: "PUT",
@@ -185,10 +178,28 @@ class App extends Component {
       },
       body: JSON.stringify({
         "device_ids": [ deviceId ],
-        "play": false,
+        "play": false
       }),
-    });
+    }).then(this.loadCurrentPlaylist)
   }
+
+  loadCurrentPlaylist = () => {
+    const playUrl = "https://api.spotify.com/v1/me/player/play?device_id=" + this.state.deviceId
+    fetch('http://localhost:3000/api/v1/users').then(resp => resp.json())
+    .then(resp => {this.SetUsers(resp)}).then(this.setLoggedInUser)
+    .then(() => {return fetch( playUrl, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${this.state.loggedInUser.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "context_uri": this.state.loggedInUser.playlist_uri
+      })
+    })
+  })
+}
+
 
   componentDidMount() {
     this.loadAllData()
@@ -204,8 +215,6 @@ class App extends Component {
 
         </header>
         <br />
-
-
 
         {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
         <br />
@@ -225,9 +234,10 @@ class App extends Component {
         <br />
         <NavBar />
         <br />
-        <CreatePlaylist />
+        <CreatePlaylist load={this.loadCurrentPlaylist} deviceId={this.state.deviceId}/>
         <br />
         <PlaylistContainer songs={this.state.birthSongs} />
+
 
       </div>
 

@@ -4,16 +4,34 @@
 
 .App-logo {
   height: 220px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+ filter: drop-shadow(0px 4px 3px #2c2f3b);
+}
+
+body {
+  color: #333399;
+  background-color: #181818;
+}
+
+.logo-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 150px;
 }
 
 .App-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-image: linear-gradient(-45deg, #ff0066, #ffff99);
   height: 180px;
   padding: 20px;
   color: white;
+}
+
+.header-buffer {
+  width: 3%;
 }
 
 .App-title {
@@ -28,33 +46,34 @@
   width: 50%
 }
 
-.song-card {
-  width: 50%;
-  margin: 0 auto;
-  border: 2px solid black;
-  border-radius: 5px;
-}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 .song-card {
-  background-color: #ffcc99;
+
+  background-color: #ffcccc;
   width: 200px;
   border-radius: 5px;
-  margin: 5px;
+  margin: 10px;
+  box-shadow: 0 2px 5px #6666ff;
+  background-image: linear-gradient(0deg, #8080ff, #e6e6ff);
 }
 
 .song-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
 }
 
 .sidebar {
   display: flex;
-  justify-content: left;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
   width: 30%;
 }
 
@@ -70,6 +89,11 @@
   margin: 10px;
 }
 
+.spotify-logout-button {
+  padding: 10px;
+  margin-left: auto;
+}
+
 .submit-year-button {
   margin: 10px;
 }
@@ -79,9 +103,15 @@
 }
 
 .music-player {
+  color: #181818;
   background-color: #ffcccc;
   width: 300px;
   border-radius: 5px;
+  position: fixed;
+  margin: 44px 10px;
+  box-shadow: 0 2px 5px rgba(200, 20, 150, 1);
+  background-image: linear-gradient(0deg, #e60073, #ffe6f2);
+
 }
 
 .playlist-page-container {

@@ -232,12 +232,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <div className="header-buffer"></div>
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
+
+
           {this.state.loggedInUser ? <LogOutButton /> : ''}
         </header>
-        {/*<br />
-        {this.state.loggedInUser? (<div><h3>Logged in as: {this.state.loggedInUser.username} </h3><Login text="switch users"/></div>) : <Login text="Login to Spotify" /> }
-        <br />*/}
         <Router>
           <React.Fragment>
             <Route exact path="/login" render={this.Login} />
@@ -246,15 +246,6 @@ class App extends Component {
           </React.Fragment>
 
         </Router>
-
-        {/*<BirthYearForm setBirthYear={this.setBirthYear}/>
-        <br />
-        <MusicPlayer artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}  />
-        <br />
-        <CreatePlaylist load={this.loadCurrentPlaylist} deviceId={this.state.deviceId}/>
-        <br />
-        <PlaylistContainer songs={this.state.birthSongs} />*/}
-
 
       </div>
 

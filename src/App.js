@@ -23,6 +23,7 @@ class App extends Component {
       trackName: "Track Name",
       artistName: "Artist Name",
       albumName: "Album Name",
+      albumArt: "",
       playing: false,
       position: 0,
       duration: 0
@@ -100,7 +101,7 @@ class App extends Component {
       const token = this.state.loggedInUser["access_token"];
 
 
-      if (window.Spotify !== null){
+      if (window.Spotify !== undefined){
         clearInterval(this.playerCheckInterval);
         this.player = new window.Spotify.Player({
           name: "Birthify Spotify Player",
@@ -138,6 +139,8 @@ class App extends Component {
       } = state.track_window;
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
+      const albumArt = currentTrack.album.images[0].url
+      console.log(albumArt)
       const artistName = currentTrack.artists
         .map(artist => artist.name)
         .join(", ");
@@ -148,7 +151,8 @@ class App extends Component {
         trackName,
         albumName,
         artistName,
-        playing
+        playing,
+        albumArt
       });
     }
 
@@ -222,7 +226,7 @@ class App extends Component {
   Playlist = () => {
     return (
       <div className="playlist-page-container">
-        <SideBar artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}/>
+        <SideBar artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} albumArt={this.state.albumArt} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}/>
         <PlaylistContainer songs={this.state.birthSongs} />
       </div>
     )
@@ -236,7 +240,7 @@ class App extends Component {
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
 
 
-          {this.state.loggedInUser ? <LogOutButton /> : ''}
+          {this.state.loggedInUser ? <LogOutButton /> : <div className="logout-buffer"></div>}
         </header>
         <Router>
           <React.Fragment>

@@ -6,14 +6,13 @@ const MusicPlayer = (props) => {
     return(
 
         <div className="music-player">
-        <h3>Now Playing:</h3>
-        <p>Artist: {props.artistName}</p>
-        <p>Track: {props.trackName}</p>
-        <p>Album: {props.albumName}</p>
+        <h3>Now Playing: {props.trackName}</h3>
+        <h4> by {props.artistName} </h4>
+        <img className="player-art" src={props.albumArt} alt=""></img>
         <p>
-          <button onClick={() => props.onPrevClick()}>Previous</button>
-          <button onClick={() => props.onPlayClick()}>{props.playing ? "pause" : "►"}</button>
-          <button onClick={() => props.onNextClick()}>Next</button>
+          <button className="player-button" onClick={() => props.onPrevClick()}><img alt="" className="player-button-image" src="./Skip-previous.svg"></img></button>
+          <button className="player-button" onClick={() => props.onPlayClick()}>{props.playing ? <img className="player-button-image" alt="" src="./Pause.svg"></img> : <img className="player-button-image" alt="" src="./Play.svg"></img>}</button>
+          <button className="player-button" onClick={() => props.onNextClick()}><img className="player-button-image" alt="" src="./Skip-next.svg"></img></button>
         </p>
         </div>
 

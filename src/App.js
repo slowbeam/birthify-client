@@ -97,7 +97,7 @@ class App extends Component {
   }
 
   checkForPlayer(){
-    if (this.state.loggedInUser){
+    if (this.state.loggedInUser !== null){
       const token = this.state.loggedInUser["access_token"];
 
 
@@ -218,9 +218,9 @@ class App extends Component {
   }
 
   Welcome = () => {
-    return (
-      <BirthYearForm setBirthYear={this.setBirthYear}/>
-    )
+      return (
+        <BirthYearForm setBirthYear={this.setBirthYear}/>
+      )
   }
 
   Playlist = () => {
@@ -232,15 +232,18 @@ class App extends Component {
     )
   }
 
+  logOutUser = () => {
+    this.setState({
+      loggedInUser: null
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <div className="header-buffer"></div>
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
-
-
-          {this.state.loggedInUser ? <LogOutButton /> : <div className="logout-buffer"></div>}
+          {this.state.loggedInUser ? <LogOutButton logOutUser={this.logOutUser} /> : <div className="logout-buffer"></div>}
         </header>
         <Router>
           <React.Fragment>

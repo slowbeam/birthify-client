@@ -3,6 +3,10 @@
 }
 
 .App-logo {
+  flex: 0 1 auto;
+  position: absolute;             /* new */
+  left: 50%;
+  transform: translateX(-50%);
   height: 220px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
  filter: drop-shadow(0px 4px 3px #2c2f3b);
@@ -26,16 +30,14 @@ button {
 
 .App-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  position: relative;
   background-image: linear-gradient(-45deg, #ff0066, #ffff99);
   height: 180px;
   padding: 20px;
   color: white;
-}
 
-.header-buffer {
-  width: 9.5%;
 }
 
 .App-title {
@@ -108,11 +110,17 @@ button {
 }
 
 .spotify-logout-button {
+  flex: 0 1 auto;
+  margin-left: auto;
   background-color: #b8fee7;
   padding: 0px 0px 0px 10px;
   border-radius: 8px;
-  margin-left: auto;
   box-shadow: 0 2px 5px #000000;
+}
+
+.logout-button-container {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .logout-text {
@@ -128,10 +136,6 @@ button {
   display: flex;
   justify-content: center;
   flex-direction: row;
-}
-
-.logout-buffer {
-  width: 8%;
 }
 
 .white-text {

@@ -17,11 +17,14 @@ export default class BirthYearForm extends Component {
 
   render(){
     return(
-      <div className="home-container">
-        <p>please enter your birth year:</p>
-        <input value={this.state.searchTerm} onChange={this.handleSearch} />
-        <button className="submit-year-button" onClick={() => this.searchForYear(this.state.searchTerm)}>submit</button>
+      <div className="birth-form-container">
+        <div className="home-container">
+          <p className="white-text">please enter your birth year:</p>
+          <input value={this.state.searchTerm} onChange={this.handleSearch} />
+          <button className="submit-year-button" onClick={() => this.searchForYear(this.state.searchTerm)}>submit</button>
         </div>
+      </div>
+
     )
   }
 }

@@ -84,9 +84,16 @@ button {
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 
+}
+
+.birth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
 }
 
 .spotify-login-button {
@@ -113,6 +120,10 @@ button {
   width: 5%;
 }
 
+.white-text {
+  color: #fff;
+}
+
 .player-art {
   height: 150px;
 }
@@ -123,6 +134,12 @@ button {
 
 .submit-year-button {
   margin: 10px;
+  background-color: #b8fee7;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px #000000;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .player-button-image {

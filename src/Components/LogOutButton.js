@@ -4,6 +4,7 @@ const LogOutButton = (props) => {
 
   const visitSpotifyLogout = () => {
     window.location='https://www.spotify.com/logout/';
+    window.location = "http://localhost:3001/login";
   }
 
 

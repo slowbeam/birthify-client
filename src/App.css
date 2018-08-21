@@ -35,7 +35,7 @@ button {
 }
 
 .header-buffer {
-  width: 5.5%;
+  width: 8%;
 }
 
 .App-title {
@@ -57,7 +57,6 @@ button {
   to { transform: rotate(360deg); }
 }
 .song-card {
-
   background-color: #ffcccc;
   width: 200px;
   border-radius: 5px;
@@ -110,10 +109,25 @@ button {
 
 .spotify-logout-button {
   background-color: #b8fee7;
-  padding: 5px;
+  padding: 0px 0px 0px 10px;
   border-radius: 8px;
   margin-left: auto;
   box-shadow: 0 2px 5px #000000;
+}
+
+.logout-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button-elements {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
 
 .logout-buffer {
@@ -140,6 +154,7 @@ button {
   box-shadow: 0 2px 5px #000000;
   font-size: 15px;
   font-weight: bold;
+  color: #333333;
 }
 
 .player-button-image {
@@ -165,7 +180,6 @@ button {
   box-shadow: 0 2px 5px #cdfeee;
   height: 30px;
   width: 300px;
-
 }
 
 .music-player {
@@ -177,7 +191,6 @@ button {
   margin: 44px 10px;
   box-shadow: 0 2px 5px rgba(200, 20, 150, 1);
   background-image: linear-gradient(0deg, #e60073, #ffe6f2);
-
 }
 
 .playlist-page-container {

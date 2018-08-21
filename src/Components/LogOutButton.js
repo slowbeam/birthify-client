@@ -10,7 +10,7 @@ const LogOutButton = (props) => {
 
     return(
       <div>
-      <button className="spotify-logout-button" onClick={visitSpotifyLogout}><img className="logout-image" src="./Sign-out.svg"></img></button>
+      <button className="spotify-logout-button" onClick={visitSpotifyLogout}><div className="button-elements"><div className="logout-text">Logout </div><img className="logout-image" src="./Sign-out.svg" alt="" ></img></div></button>
       </div>
 
     )

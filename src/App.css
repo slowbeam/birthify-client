@@ -197,8 +197,8 @@ body {
   width: 200px;
   height: 200px;
   margin: 10px;
-  overflow: hidden;
   box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);
   text-align: center;
+  background-size: cover;
   background-color: #ff9d85;
 }

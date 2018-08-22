@@ -26,7 +26,8 @@ class App extends Component {
       albumArt: "",
       playing: false,
       position: 0,
-      duration: 0
+      duration: 0,
+      playlistLoaded: false
     };
 
     this.playerCheckInterval = null;
@@ -140,6 +141,7 @@ class App extends Component {
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const albumArt = currentTrack.album.images[0].url
+      const playlistLoaded = true
       console.log(albumArt)
       const artistName = currentTrack.artists
         .map(artist => artist.name)
@@ -152,7 +154,8 @@ class App extends Component {
         albumName,
         artistName,
         playing,
-        albumArt
+        albumArt,
+        playlistLoaded
       });
     }
 
@@ -188,6 +191,7 @@ class App extends Component {
   }
 
   loadCurrentPlaylist = () => {
+
     const playUrl = "https://api.spotify.com/v1/me/player/play?device_id=" + this.state.deviceId
     fetch('http://localhost:3000/api/v1/users').then(resp => resp.json())
     .then(resp => {this.SetUsers(resp)}).then(this.setLoggedInUser)
@@ -226,7 +230,7 @@ class App extends Component {
   Playlist = () => {
     return (
       <div className="playlist-page-container">
-        <SideBar artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} albumArt={this.state.albumArt} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}/>
+        <SideBar playlistLoaded={this.state.playlistLoaded} artistName={this.state.artistName} trackName={this.state.trackName} albumName={this.state.albumName} albumArt={this.state.albumArt} playing={this.state.playing} onPrevClick={this.onPrevClick} onPlayClick={this.onPlayClick} onNextClick={this.onNextClick}/>
         <PlaylistContainer songs={this.state.birthSongs} />
       </div>
     )

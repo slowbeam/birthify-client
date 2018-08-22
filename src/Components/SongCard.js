@@ -1,17 +1,32 @@
 import React from 'react';
 
-const SongCard = (props) => {
+class SongCard extends React.Component {
+
+  state = {
+    facingFront: true
+  }
+
+  flipCard = () => {
+    this.setState({
+      facingFront: !this.state.facingFront
+    })
+  }
+
+  render(){
     return (
-        <React.Fragment>
-            <div className='song-card'>
-                <h3>{props.song.title}</h3>
-                <h4>{props.song.artist}</h4>
-                <p>{props.song.release_date}</p>
-                <img className='album-cover' src={props.song.cover} alt=''/>
-            </div>
+        <div onMouseEnter={this.flipCard} onMouseLeave={this.flipCard}>
+          {this.state.facingFront ? <div style={{
+              backgroundImage: `url(${this.props.song.cover})`}} className='song-card'>
+          </div> : <div className='song-card'> <h4>{this.props.song.title}</h4>
+        <h4>{this.props.song.artist}</h4>
+                <p>{this.props.song.release_date}</p>
+          </div> }
+
             <br />
-        </React.Fragment>
+        </div>
     );
+  }
+
 }
 
 export default SongCard;

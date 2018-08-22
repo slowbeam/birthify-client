@@ -86,17 +86,28 @@ body {
 }
 
 .spotify-login-button {
-  color: #333333;
-  font-size: 15px;
-  font-weight: bold;
-  margin: 10px;
-  margin-top: 20px;
-  background-color: #b8fee7;
-  box-shadow: 0 2px 5px #cdfeee;
-  height: 30px;
+  background-image: url('/connectwithspotify.png');
+  background-size: cover;
+  height: 52.5px;
+  width: 300px;
+  margin-top: 40px
 }
 
 .spotify-logout-button {
+  flex: 0 1 auto;
+  margin-left: auto;
+  background-image: url('/spotify-logout-transparent.png');
+  background-size: cover;
+  height: 52.5px;
+  width: 300px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+}
+
+.spotify-logoutt-button {
   flex: 0 1 auto;
   margin-left: auto;
   background-color: #b8fee7;
@@ -174,8 +185,8 @@ body {
   width: 300px;
   position: fixed;
   margin: 44px 10px;
-  box-shadow: 0 2px 5px rgba(200, 20, 150, 1);
   background-image: linear-gradient(-45deg, #e60073, #ffe6f2);
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);
 }
 
 .playlist-page-container {
@@ -187,7 +198,10 @@ body {
   width: 70%;
 }
 
-
+h4 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 .song-card{
   color: #fff;

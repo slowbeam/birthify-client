@@ -251,7 +251,7 @@ class App extends Component {
         </header>
         <Router>
           <React.Fragment>
-            <Route exact path="/login" render={this.Login} />
+            <Route exact path="/" render={this.Login} />
             <Route exact path="/welcome" render={this.Welcome} />
             <Route exact path="/playlist" render={this.Playlist} />
           </React.Fragment>

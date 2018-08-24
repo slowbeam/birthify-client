@@ -6,19 +6,21 @@ import Login from './Components/Login'
 import BirthYearForm from './Components/BirthYearForm'
 import LogOutButton from './Components/LogOutButton'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-
+import { connect } from 'react-redux';
+import { logInUserAction, logoutUserAction } from '../redux/actions';
 
 class App extends Component {
 
+  // Why not just shove it all in there?
   constructor(props){
     super(props);
     this.state = {
       users: [],
-      songs: [],
+      songs: [], // In Redux
       songUsers: [],
-      birthYear: '',
-      birthSongs: [],
-      loggedInUser: null,
+      birthYear: '', // But it's only used once! Probably use it again.
+      birthSongs: [], // Same reason.
+      // loggedInUser: null, // Definitely in Redux
       deviceId: "",
       trackName: "Track Name",
       artistName: "Artist Name",
@@ -48,10 +50,18 @@ class App extends Component {
   setLoggedInUser = () => {
     const foundUser = this.state.users.find(userObj => userObj["logged_in"] === true);
 
+    // TODO:
     if (foundUser){
-      this.setState({
-      loggedInUser: foundUser
-      })
+      // This will be replaced with dispatches
+
+      // this.setState({
+      // loggedInUser: foundUser
+      // })
+
+      // console.log('hello');
+      // let action = { type: 'LOGIN', payload: foundUser };
+      // this.props.dispatch(action);
+      this.props.logInUser(foundUser);
     }
 
   }
@@ -64,11 +74,11 @@ class App extends Component {
 
   loadLoggedInUsersSongs = () => {
 
-    if (this.state.loggedInUser){
+    if (this.props.loggedInUser){
 
       const dupArray = [...this.state.songUsers]
 
-      const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.state.loggedInUser.id)
+      const filteredSongUserArray = dupArray.filter(obj => obj["user_id"] === this.props.loggedInUser.id)
 
       const songIdArray = filteredSongUserArray.map(songUserObj => songUserObj["song_id"]);
 
@@ -89,8 +99,8 @@ class App extends Component {
   }
 
   renderLoginText = () => {
-    if (this.state.loggedInUser){
-      return <h3>Logged in as: {this.state.loggedInUser.username} </h3>
+    if (this.props.loggedInUser){
+      return <h3>Logged in as: {this.props.loggedInUser.username} </h3>
     }
     else {
       return <h3>Please Login</h3>
@@ -98,8 +108,8 @@ class App extends Component {
   }
 
   checkForPlayer(){
-    if (this.state.loggedInUser !== null){
-      const token = this.state.loggedInUser["access_token"];
+    if (this.props.loggedInUser !== null){
+      const token = this.props.loggedInUser["access_token"];
 
 
       if (window.Spotify !== undefined){
@@ -176,7 +186,8 @@ class App extends Component {
   transferPlaybackHere = () => {
 
 
-    const { deviceId, loggedInUser } = this.state;
+    const { deviceId } = this.state;
+    const { loggedInUser } = this.props;
     fetch("https://api.spotify.com/v1/me/player", {
       method: "PUT",
       headers: {
@@ -198,11 +209,11 @@ class App extends Component {
     .then(() => {return fetch( playUrl, {
       method: "PUT",
       headers: {
-        authorization: `Bearer ${this.state.loggedInUser.access_token}`,
+        authorization: `Bearer ${this.props.loggedInUser.access_token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "context_uri": this.state.loggedInUser.playlist_uri
+        "context_uri": this.props.loggedInUser.playlist_uri
       })
     })
   })
@@ -237,9 +248,13 @@ class App extends Component {
   }
 
   logOutUser = () => {
-    this.setState({
-      loggedInUser: null
-    })
+    // TODO:
+    // this.setState({
+    //   loggedInUser: null
+    // })
+    // let action = { type: 'LOGOUT' };
+    // this.props.dispatch(action);
+    this.props.logOutUser();
   }
 
   render() {
@@ -247,7 +262,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img className="App-logo" src='/birthify_logo_large.png' alt="" />
-          {this.state.loggedInUser ? <LogOutButton logOutUser={this.logOutUser} /> : <div className="logout-buffer"></div>}
+          {this.props.loggedInUser ? <LogOutButton logOutUser={this.logOutUser} /> : <div className="logout-buffer"></div>}
         </header>
         <Router>
           <React.Fragment>
@@ -264,4 +279,37 @@ class App extends Component {
   }
 }
 
-export default App;
+
+// loggedInUser
+function mapStateToProps(state) {
+  console.log('mapStateToProps', this);
+  return {
+    loggedInUser: state.loggedInUser,
+  }
+}
+
+// let action = { type: 'LOGIN', payload: foundUser };
+// this.props.dispatch(action);
+
+// let action = { type: 'LOGOUT' };
+// this.props.dispatch(action);
+
+function mapDispatchToProps(dispatch) {
+  console.log('mapDispatchToProps', this);
+  return {
+    logOutUser: () => dispatch(logoutUserAction()),
+    logInUser: (foundUser) => dispatch(logInUserAction(foundUser)),
+    // logOutUser: () => {
+    //   // let action = { type: 'LOGOUT' };
+    //   // dispatch(action);
+    //   dispatch(logoutUserAction());
+    // },
+    // logInUser: (foundUser) => {
+    //   // let action = { type: 'LOGIN', payload: foundUser };
+    //   // dispatch(action);
+    //   dispatch(logInUserAction(foundUser));
+    // }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
